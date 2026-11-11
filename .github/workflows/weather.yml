@@ -1,0 +1,38 @@
+name: Oppdater værmelding
+
+on:
+  schedule:
+    # Hver tredje time fra 11. til 15. november (UTC)
+    - cron: "17 */3 11-15 11 *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: weather
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Hent vær fra Yr / MET Norway
+        run: python scripts/update_weather.py
+      - name: Bygg siden
+        run: python scripts/build.py
+      - name: Lagre endringer
+        run: |
+          git config user.name "blaatur-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/weather.json index.html
+          if git diff --cached --quiet; then
+            echo "Ingen endringer"
+          else
+            git commit -m "Oppdater værmelding"
+            git push
+          fi
