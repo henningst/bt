@@ -228,11 +228,11 @@ html,body,.stage,.board,.flap{transition:background-color .6s ease,color .6s eas
   var city=build(document.getElementById("f-city"),data.city.length);
   var code=build(document.getElementById("f-code"),data.code.length);
 
-  function spin(tiles,word,delay,done){
+  function spin(tiles,word,delay,done,stagger){
     var finished=0;
     Array.prototype.forEach.call(tiles,function(t,i){
       if(reduce){t.textContent=word[i];if(++finished===tiles.length&&done)done();return;}
-      var stopAt=Date.now()+delay+i*160,iv=setInterval(function(){
+      var stopAt=Date.now()+delay+i*(stagger||160),iv=setInterval(function(){
         t.classList.remove("tick");void t.offsetWidth;t.classList.add("tick");
         if(Date.now()>=stopAt){t.textContent=word[i];clearInterval(iv);if(++finished===tiles.length&&done)done();}
         else t.textContent=CHARS[Math.floor(Math.random()*CHARS.length)];
@@ -262,11 +262,11 @@ html,body,.stage,.board,.flap{transition:background-color .6s ease,color .6s eas
   function showContent(html){contentEl.classList.remove("in");void contentEl.offsetWidth;contentEl.innerHTML=html;contentEl.hidden=false;contentEl.classList.add("in");hintEl.hidden=false;hintEl.classList.remove("fadein");void hintEl.offsetWidth;hintEl.classList.add("fadein");}
   function realReveal(){
     statusEl.textContent="Søker …";statusEl.classList.add("blink");
-    spin(code,data.code,500);
-    spin(city,data.city,800,function(){
+    spin(code,data.code,2400,null,300);
+    spin(city,data.city,2800,function(){
       statusEl.textContent=data.status;statusEl.classList.remove("blink");
       setTimeout(function(){showContent(data.html);},500);
-    });
+    },300);
   }
   function neida(){
     var o=document.getElementById("neida");
