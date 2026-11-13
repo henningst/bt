@@ -1,5 +1,5 @@
 {
-  "updated_text": "sist oppdatert fredag 13. november kl. 07.47",
+  "updated_text": "sist oppdatert fredag 13. november kl. 18.13",
   "days": [
     {
       "date": "2026-11-12",
@@ -20,17 +20,17 @@
     {
       "date": "2026-11-14",
       "symbol": "clearsky",
-      "temp": 24,
-      "max": 24,
-      "min": 14,
+      "temp": 23,
+      "max": 23,
+      "min": 15,
       "precip": 0.0
     },
     {
       "date": "2026-11-15",
-      "symbol": "cloudy",
+      "symbol": "partlycloudy",
       "temp": 22,
       "max": 22,
-      "min": 14,
+      "min": 13,
       "precip": 0.0
     }
   ]
